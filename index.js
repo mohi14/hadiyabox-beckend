@@ -125,8 +125,16 @@ async function run(){
                 }
             }
             const sellerVerification = await laptopsCollection.updateMany(query, update)
-            
+
         res.send(result)
+        })
+
+        app.get('/buyers', async(req,res)=>{
+            const query = {
+                role: "Buyer"
+            }
+            const buyers = await usersCollection.find(query).toArray()
+            res.send(buyers)
         })
 
     }
