@@ -81,6 +81,14 @@ const usersCollection = client.db('coomercio').collection('users')
             res.send(result)
         })
 
+        app.get('/sellers', async(req,res)=>{
+            const query = {
+                role: "Seller"
+            }
+            const sellers = await usersCollection.find(query).toArray()
+            res.send(sellers);
+        })
+
     }
     finally{
 
