@@ -36,7 +36,7 @@ async function run(){
         const laptopsCollection = client.db('coomercio').collection('laptops');
         const brandsCollection = client.db('coomercio').collection('brands')
         const usersCollection = client.db('coomercio').collection('users')
-
+        const bookingsCollection = client.db('coomercio').collection('bookings')
 
         // api
         app.get('/api/laptops', async(req,res)=>{
@@ -144,7 +144,14 @@ async function run(){
             res.send(result)
         })
 
-        
+        app.get('/api/bookings', async(req,res)=>{
+            const email = req.query.email
+            const query = {
+                email: email
+            }
+            const result = await bookingsCollection.find(query).toArray()
+            res.send(result)
+        })
 
     }
     finally{
