@@ -3,7 +3,6 @@ const cors = require('cors')
 const {MongoClient, ServerApiVersion, ObjectId}= require('mongodb')
 const jwt = require('jsonwebtoken')
 require('dotenv').config()
-
 const port = process.env.PORT || 5000;
 
 const app = express()
@@ -33,12 +32,13 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 
 async function run(){
     try{
+        // data collections
         const laptopsCollection = client.db('coomercio').collection('laptops');
         const brandsCollection = client.db('coomercio').collection('brands')
-const usersCollection = client.db('coomercio').collection('users')
+        const usersCollection = client.db('coomercio').collection('users')
 
 
-
+        // api
         app.get('/laptops', async(req,res)=>{
             const query ={};
             const laptops = await laptopsCollection.find(query).toArray();
@@ -103,6 +103,30 @@ const usersCollection = client.db('coomercio').collection('users')
             const filter = {_id: ObjectId(id)}
             const result = await usersCollection.deleteOne(filter)
             res.send(result)
+        })
+
+        app.put('/sellers/:id', async(req,res)=>{
+            const email = req.params.id
+            const filter = {email: email}
+            const options = {upsert: true};
+            const updateDoc = {
+                $set:{
+                    status: true
+                }
+            }
+            const result = await usersCollection.updateOne(filter, updateDoc, options)
+            
+            const query = {
+                seller_email: email
+            }
+            const update = {
+                $set:{
+                    sellerVerified: true
+                }
+            }
+            const sellerVerification = await laptopsCollection.updateMany(query, update)
+            
+        res.send(result)
         })
 
     }
