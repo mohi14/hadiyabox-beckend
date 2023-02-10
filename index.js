@@ -39,19 +39,19 @@ async function run(){
 
 
         // api
-        app.get('/laptops', async(req,res)=>{
+        app.get('/api/laptops', async(req,res)=>{
             const query ={};
             const laptops = await laptopsCollection.find(query).toArray();
             res.send(laptops)
         })
 
-        app.get('/brands', async(req, res)=>{
+        app.get('/api/brands', async(req, res)=>{
             const query = {}
             const brands = await brandsCollection.find(query).toArray()
             res.send(brands)
         })
 
-        app.get('/category/:id', async(req,res)=>{
+        app.get('/api/category/:id', async(req,res)=>{
             const id = req.params.id;
             const filter = {
                 category_Id: id,
@@ -61,13 +61,13 @@ async function run(){
             res.send(products)
         })
 
-        app.get('/users', async(req,res)=>{
+        app.get('/api/users', async(req,res)=>{
             const query = {};
             const users = await usersCollection.find(query).toArray()
             res.send(users)
         })
 
-        app.post('/users', async(req,res)=>{
+        app.post('/api/users', async(req,res)=>{
             const user = req.body;
             const filter = {
                 email: user.email
@@ -81,7 +81,7 @@ async function run(){
             res.send(result)
         })
 
-        app.get('/sellers', async(req,res)=>{
+        app.get('/api/sellers', async(req,res)=>{
             const query = {
                 role: "Seller"
             }
@@ -89,7 +89,7 @@ async function run(){
             res.send(sellers);
         })
 
-        app.get('/sellers/:id', async(req,res)=>{
+        app.get('/api/sellers/:id', async(req,res)=>{
             const email = req.params.id
             const query ={
                 email: email
@@ -98,14 +98,14 @@ async function run(){
             res.send(result)
         })
 
-        app.delete('/sellers/:id', async(req,res)=>{
+        app.delete('/api/sellers/:id', async(req,res)=>{
             const id = req.params.id
             const filter = {_id: ObjectId(id)}
             const result = await usersCollection.deleteOne(filter)
             res.send(result)
         })
 
-        app.put('/sellers/:id', async(req,res)=>{
+        app.put('/api/sellers/:id', async(req,res)=>{
             const email = req.params.id
             const filter = {email: email}
             const options = {upsert: true};
@@ -129,13 +129,22 @@ async function run(){
         res.send(result)
         })
 
-        app.get('/buyers', async(req,res)=>{
+        app.get('/api/buyers', async(req,res)=>{
             const query = {
                 role: "Buyer"
             }
             const buyers = await usersCollection.find(query).toArray()
             res.send(buyers)
         })
+
+        app.delete('/api/buyers/:id', async(req, res)=>{
+            const id = req.params.id;
+            const filter = {_id: ObjectId(id)}
+            const result = await usersCollection.deleteOne(filter)
+            res.send(result)
+        })
+
+        
 
     }
     finally{
