@@ -89,6 +89,16 @@ const usersCollection = client.db('coomercio').collection('users')
             res.send(sellers);
         })
 
+        app.get('/sellers/:id', async(req,res)=>{
+            const email = req.params.id
+            const query ={
+                email: email
+            }
+            const result = await usersCollection.findOne(query)
+            res.send(result)
+        })
+        
+
     }
     finally{
 
