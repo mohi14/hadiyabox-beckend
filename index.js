@@ -20,7 +20,7 @@ async function run(){
     try{
         const laptopsCollection = client.db('coomercio').collection('laptops');
         const brandsCollection = client.db('coomercio').collection('brands')
-
+const usersCollection = client.db('coomercio').collection('users')
 
 
 
@@ -44,6 +44,12 @@ async function run(){
             }
             const products = await laptopsCollection.find(filter).toArray()
             res.send(products)
+        })
+
+        app.get('/users', async(req,res)=>{
+            const query = {};
+            const users = await usersCollection.find(query).toArray()
+            res.send(users)
         })
 
     }
