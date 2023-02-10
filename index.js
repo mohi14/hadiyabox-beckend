@@ -67,6 +67,20 @@ const usersCollection = client.db('coomercio').collection('users')
             res.send(users)
         })
 
+        app.post('/users', async(req,res)=>{
+            const user = req.body;
+            const filter = {
+                email: user.email
+            }
+            const alreadySignup = await usersCollection.find(filter).toArray()
+            if(alreadySignup.length){
+                const message = "User already sign in"
+                return res.send({acknowledged: false, message})
+            }
+            const result = await usersCollection.insertOne(user)
+            res.send(result)
+        })
+
     }
     finally{
 
