@@ -1,6 +1,6 @@
 const express = require('express')
 const cors = require('cors')
-const {MongoClient, ServerApiVersion}= require('mongodb')
+const {MongoClient, ServerApiVersion, ObjectId}= require('mongodb')
 const jwt = require('jsonwebtoken')
 require('dotenv').config()
 
@@ -97,7 +97,13 @@ const usersCollection = client.db('coomercio').collection('users')
             const result = await usersCollection.findOne(query)
             res.send(result)
         })
-        
+
+        app.delete('/sellers/:id', async(req,res)=>{
+            const id = req.params.id
+            const filter = {_id: ObjectId(id)}
+            const result = await usersCollection.deleteOne(filter)
+            res.send(result)
+        })
 
     }
     finally{
