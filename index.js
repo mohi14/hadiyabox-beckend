@@ -36,6 +36,16 @@ async function run(){
             res.send(brands)
         })
 
+        app.get('/category/:id', async(req,res)=>{
+            const id = req.params.id;
+            const filter = {
+                category_Id: id,
+                paid: false
+            }
+            const products = await laptopsCollection.find(filter).toArray()
+            res.send(products)
+        })
+
     }
     finally{
 
