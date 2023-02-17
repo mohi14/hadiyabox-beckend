@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const connectDB =  async ()=>{
 
     try{
-        const conn = await mongoose.connect("mongodb+srv://saikat:saikat1095@cluster0.htwdq.mongodb.net/proShop",{
+        const conn = await mongoose.connect("",{
             //must add in order to not get any error masseges:
             useUnifiedTopology:true,
             useNewUrlParser: true,
