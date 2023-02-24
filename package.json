@@ -1,45 +1,41 @@
 {
-  "name": "proshop_mern",
-  "version": "1.0.0",
-  "description": "",
-  "main": "server.js",
-  "type": "commonjs",
+  "name": "dashtar-admin",
+  "version": "0.1.0",
+  "description": "this is the server of dashtar built with node, express, mongoose schema validation and use mongodb as a database",
+  "main": "index.js",
   "scripts": {
-    "start": "node backend/server",
-    "server": "nodemon backend/server",
-    "client": "npm start --prefix frontend",
-    "dev": "concurrently \"npm run server\" \"npm run client\" ",
-    "data:import": "node backend/seeder",
-    "data:destroy": "node backend/seeder -d",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
+    "start:dev": "nodemon api/index.js",
+    "start": "node api/index.js",
+    "production": "NODE_ENV=production nodemon api/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "data:import": "node seed.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/saikat1095/proshop_mern.git"
-  },
-  "keywords": [
-    "mern",
-    "pro",
-    "shop"
-  ],
-  "author": "saikat",
+  "author": "htmlLover",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/saikat1095/proshop_mern/issues"
-  },
-  "homepage": "https://github.com/saikat1095/proshop_mern#readme",
   "dependencies": {
+    "aws-sdk": "^2.1226.0",
     "bcryptjs": "^2.4.3",
-    "colors": "^1.4.0",
-    "dotenv": "^8.2.0",
+    "body-parser": "^1.19.0",
+    "cloudinary": "^1.26.3",
+    "cors": "^2.8.5",
+    "dayjs": "^1.10.7",
+    "dotenv": "^10.0.0",
     "express": "^4.17.1",
-    "express-async-handler": "^1.1.4",
+    "express-fileupload": "^1.4.0",
+    "express-rate-limit": "^6.1.0",
+    "helmet": "^5.0.2",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.11.19",
+    "mongoose": "^5.13.8",
+    "mongoose-sequence": "^5.3.1",
     "morgan": "^1.10.0",
-    "multer": "^1.4.2"
+    "multer": "^1.4.4",
+    "multer-s3": "^3.0.1",
+    "nodemailer": "^6.7.2",
+    "socket.io": "^4.4.0",
+    "stripe": "^10.14.0",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "concurrently": "^6.0.0"
+    "nodemon": "^2.0.12"
   }
 }
