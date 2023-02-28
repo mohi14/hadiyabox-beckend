@@ -1,4 +1,6 @@
 const express = require("express");
+const { isAuth } = require("../config/auth");
+// const { isAuth } = require("../config/auth");
 const router = express.Router();
 const {
   getAllProducts,
@@ -15,6 +17,7 @@ const {
   getSearchProducts,
   getProductByParent,
   Stripehandler,
+  createProductReview,
 } = require("../controller/productController");
 
 //add a product
@@ -55,6 +58,10 @@ router.put("/:id", updateProduct);
 
 //update a product status
 router.put("/status/:id", updateStatus);
+
+//reviews
+// router.route("/:id/reviews").post(isAuth, createProductReview);
+router.route("/:id/reviews").post(createProductReview);
 
 //delete a product
 router.delete("/:id", deleteProduct);
