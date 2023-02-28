@@ -17,6 +17,7 @@ const couponRoutes = require("../routes/couponRoutes");
 const uploadAWSRoutes = require("../routes/uploadAWSRoutes");
 const { isAuth, isAdmin } = require("../config/auth");
 const blogRoutes = require("../routes/blogRoutes");
+const ticketRoutes = require("../routes/ticketRoutes");
 
 connectDB();
 const app = express();
@@ -51,6 +52,8 @@ app.use("/api/address/", addressRoutes);
 app.use("/api/uploadaws/", uploadAWSRoutes);
 
 app.use("/api/blogs/", blogRoutes);
+
+app.use("/api/ticket/", ticketRoutes);
 
 // Use express's default error handling middleware
 app.use((err, req, res, next) => {
