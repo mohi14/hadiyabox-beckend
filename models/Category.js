@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const categorySchema = new mongoose.Schema({
-  parent: {
+  category: {
     type: String,
     required: true,
   },
@@ -9,20 +9,24 @@ const categorySchema = new mongoose.Schema({
     type: String,
     required: false,
   },
-  // type: {
-  //   type: String,
-  //   required: true,
-  // },
-  icon: {
+  product_name: {
     type: String,
     required: true,
   },
-  children: [{}],
-  status: {
+  price: {
     type: String,
-    enum: ["Show", "Hide"],
-    default: "Show",
+    required: true,
   },
+  // image: {
+  //   type: String,
+  //   required: true,
+  // },
+  // children: [{}],
+  // status: {
+  //   type: String,
+  //   enum: ["Show", "Hide"],
+  //   default: "Show",
+  // },
 });
 
 const Category = mongoose.model("Category", categorySchema);

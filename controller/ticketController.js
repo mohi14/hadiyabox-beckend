@@ -1,4 +1,5 @@
 const Ticket = require("../models/Ticket");
+const User = require("../models/User");
 
 const addTicket = async (req, res) => {
   const { name, amount, image, status } = req.body;
@@ -47,8 +48,39 @@ const getTicket = async (req, res) => {
   }
 };
 
+const updateTicketStatus = async (req, res) => {
+  const allUser = await User.find({}).sort({ _id: -1 });
+
+  if (req.body.status === true) {
+    const updateTicketStatus = await Ticket.updateOne(
+      { _id: req.params.id },
+      {
+        $set: {
+          status: true,
+        },
+      }
+    );
+
+    const ticketAmount = await Ticket.findById(req.params.id);
+
+    const updateUserWallet = await User.updateMany(
+      {},
+      {
+        $inc: { wallet: ticketAmount.amount },
+      },
+      function (err, res) {
+        if (err) throw err;
+      }
+    );
+    res.send(updateUserWallet);
+  } else {
+    res.send("");
+  }
+};
+
 module.exports = {
   addTicket,
   deleteTicket,
   getTicket,
+  updateTicketStatus,
 };

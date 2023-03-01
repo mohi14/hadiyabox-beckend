@@ -110,10 +110,12 @@ const deleteCategory = (req, res) => {
     if (err) {
       res.status(500).send({
         message: err.message,
+        status: 500,
       });
     } else {
       res.status(200).send({
         message: "Category Deleted Successfully!",
+        status: 200,
       });
     }
   });

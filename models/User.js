@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema(
   {
@@ -37,12 +37,17 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: false,
     },
+    wallet: {
+      type: Number,
+      default: 0,
+      required: false,
+    },
   },
   {
     timestamps: true,
   }
 );
 
-const User = mongoose.models.User || mongoose.model('User', userSchema);
+const User = mongoose.models.User || mongoose.model("User", userSchema);
 
 module.exports = User;
