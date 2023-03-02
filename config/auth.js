@@ -1,7 +1,7 @@
-require('dotenv').config();
-const jwt = require('jsonwebtoken');
-const nodemailer = require('nodemailer');
-const Admin = require('../models/Admin');
+require("dotenv").config();
+const jwt = require("jsonwebtoken");
+const nodemailer = require("nodemailer");
+const Admin = require("../models/Admin");
 
 const signInToken = (user) => {
   return jwt.sign(
@@ -15,7 +15,7 @@ const signInToken = (user) => {
     },
     process.env.JWT_SECRET,
     {
-      expiresIn: '2d',
+      expiresIn: "2d",
     }
   );
 };
@@ -29,14 +29,14 @@ const tokenForVerify = (user) => {
       password: user.password,
     },
     process.env.JWT_SECRET_FOR_VERIFY,
-    { expiresIn: '15m' }
+    { expiresIn: "15m" }
   );
 };
 
 const isAuth = async (req, res, next) => {
   const { authorization } = req.headers;
   try {
-    const token = authorization.split(' ')[1];
+    const token = authorization.split(" ")[1];
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
     next();
@@ -48,12 +48,12 @@ const isAuth = async (req, res, next) => {
 };
 
 const isAdmin = async (req, res, next) => {
-  const admin = await Admin.findOne({ role: 'Admin' });
+  const admin = await Admin.findOne({ role: "admin" });
   if (admin) {
     next();
   } else {
     res.status(401).send({
-      message: 'User is not Admin',
+      message: "User is not Admin",
     });
   }
 };
@@ -82,7 +82,7 @@ const sendEmail = (body, res, message) => {
       });
       console.log(err.message);
     } else {
-      console.log('Server is ready to take our messages');
+      console.log("Server is ready to take our messages");
     }
   });
 

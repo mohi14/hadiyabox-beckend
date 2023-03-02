@@ -1,5 +1,5 @@
 const express = require("express");
-const { isAdmin } = require("../config/auth");
+const { isAdmin, isAuth } = require("../config/auth");
 const router = express.Router();
 
 const {
@@ -10,7 +10,8 @@ const {
 } = require("../controller/ticketController");
 
 // add ticket
-router.post("/add", addTicket);
+// router.post("/add", isAuth, addTicket);
+router.post("/add/:id", addTicket);
 
 // delete ticket
 router.post("/remove/:id", isAdmin, deleteTicket);

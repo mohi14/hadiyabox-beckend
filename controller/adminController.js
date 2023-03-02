@@ -12,6 +12,7 @@ const registerAdmin = async (req, res) => {
     if (isAdded) {
       return res.status(403).send({
         message: "This Email already Added!",
+        status: 403,
       });
     } else {
       const newStaff = new Admin({

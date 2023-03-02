@@ -1,10 +1,17 @@
 const Ticket = require("../models/Ticket");
 const User = require("../models/User");
+const Admin = require("../models/Admin");
 
 const addTicket = async (req, res) => {
   const { name, amount, image, status } = req.body;
   try {
-    const newTicket = new Ticket({ name, amount, image, status });
+    const newTicket = new Ticket({
+      name,
+      amount,
+      image,
+      status,
+      user: req.params.id,
+    });
     //   console.log(newTicket, "okay");
     await newTicket.save();
     res.status(200).send({
@@ -49,32 +56,43 @@ const getTicket = async (req, res) => {
 };
 
 const updateTicketStatus = async (req, res) => {
-  const allUser = await User.find({}).sort({ _id: -1 });
+  try {
+    const ticket = await Ticket.findOne({ _id: req.params.id });
+    if (ticket.status === false) {
+      await Ticket.updateOne(
+        { _id: req.params.id },
+        {
+          $set: {
+            status: true,
+          },
+        }
+      );
+      const ticketAmount = await Ticket.findById(req.params.id);
+      await User.updateOne(
+        { _id: ticketAmount.user },
+        {
+          $inc: { wallet: ticketAmount.amount },
+        }
+      );
 
-  if (req.body.status === true) {
-    const updateTicketStatus = await Ticket.updateOne(
-      { _id: req.params.id },
-      {
-        $set: {
-          status: true,
-        },
-      }
-    );
-
-    const ticketAmount = await Ticket.findById(req.params.id);
-
-    const updateUserWallet = await User.updateMany(
-      {},
-      {
-        $inc: { wallet: ticketAmount.amount },
-      },
-      function (err, res) {
-        if (err) throw err;
-      }
-    );
-    res.send(updateUserWallet);
-  } else {
-    res.send("");
+      await Admin.updateOne(
+        { role: "admin" },
+        {
+          $inc: { wallet: ticketAmount.amount },
+        }
+      );
+      res.status(200).send({
+        message: "Wallet Update successfully",
+        status: 200,
+      });
+    } else {
+      res.status(400).send({
+        message: "This Ticket is already used.",
+        status: 400,
+      });
+    }
+  } catch (err) {
+    res.status(404).send(err.message);
   }
 };
 
