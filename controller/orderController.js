@@ -1,4 +1,6 @@
-const Order = require('../models/Order');
+const Order = require("../models/Order");
+const { findOne } = require("../models/User");
+const User = require("../models/User");
 
 const getAllOrders = async (req, res) => {
   try {
@@ -51,7 +53,7 @@ const updateOrder = (req, res) => {
         });
       } else {
         res.status(200).send({
-          message: 'Order Updated Successfully!',
+          message: "Order Updated Successfully!",
         });
       }
     }
@@ -66,10 +68,41 @@ const deleteOrder = (req, res) => {
       });
     } else {
       res.status(200).send({
-        message: 'Order Deleted Successfully!',
+        message: "Order Deleted Successfully!",
       });
     }
   });
+};
+
+const addOrderByUser = async (req, res) => {
+  const orderAmount = parseInt(req.body.amount);
+
+  const user = await User.findOne({ _id: req.params.id });
+
+  try {
+    if (user.wallet >= orderAmount) {
+      await User.updateOne(
+        { _id: req.params.id },
+        {
+          $inc: { wallet: -orderAmount },
+        }
+      );
+      res.status(200).send({
+        message: "Order Added Successfully",
+        status: 200,
+      });
+    } else if (user.wallet === 0 || user.wallet < orderAmount) {
+      res.status(400).send({
+        message: "You dont have sufficient balance in your wallet",
+        status: 400,
+      });
+    }
+  } catch (error) {
+    res.status(500).send({
+      message: error.message,
+      status: 500,
+    });
+  }
 };
 
 module.exports = {
@@ -78,4 +111,5 @@ module.exports = {
   getOrderByUser,
   updateOrder,
   deleteOrder,
+  addOrderByUser,
 };

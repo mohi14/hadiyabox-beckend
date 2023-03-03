@@ -1,4 +1,4 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 const {
   getAllOrders,
@@ -6,21 +6,27 @@ const {
   getOrderByUser,
   updateOrder,
   deleteOrder,
-} = require('../controller/orderController');
+  addOrderByUser,
+} = require("../controller/orderController");
 
 //get all orders
-router.get('/', getAllOrders);
+router.get("/", getAllOrders);
 
 //get all order by a user
-router.get('/user/:id', getOrderByUser);
+router.get("/user/:id", getOrderByUser);
 
 //get a order by id
-router.get('/:id', getOrderById);
+router.get("/:id", getOrderById);
 
 //update a order
-router.put('/:id', updateOrder);
+router.put("/:id", updateOrder);
 
 //delete a order
-router.delete('/:id', deleteOrder);
+router.delete("/:id", deleteOrder);
+
+// add a order
+router.post("/add/:id", addOrderByUser);
+
+// TODO: add cart
 
 module.exports = router;

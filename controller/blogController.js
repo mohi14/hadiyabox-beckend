@@ -51,8 +51,20 @@ const updateBlog = (req, res) => {
   );
 };
 
+const getSingleBlog = async (req, res) => {
+  try {
+    const blog = await Blog.findOne({ _id: req.params.id });
+    res.send(blog);
+  } catch (err) {
+    res.status(500).send({
+      message: err.message,
+    });
+  }
+};
+
 module.exports = {
   addBlog,
   getAllBlogs,
   deleteBlog,
+  getSingleBlog,
 };

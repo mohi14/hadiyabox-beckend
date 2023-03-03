@@ -42,7 +42,7 @@ const adminSchema = new mongoose.Schema(
     role: {
       type: String,
       required: false,
-      enum: ["user", "admin"],
+      enum: ["user", "admin", "seller"],
       default: "user",
     },
     joiningData: {
@@ -51,7 +51,7 @@ const adminSchema = new mongoose.Schema(
     },
     wallet: {
       type: Number,
-      required: true,
+      required: false,
       default: 0,
     },
   },

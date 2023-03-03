@@ -1,22 +1,6 @@
 const mongoose = require("mongoose");
 
-const reviewSchema = mongoose.Schema(
-  {
-    name: { type: String, required: true },
-    rating: { type: Number, required: true },
-    comment: { type: String, required: true },
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      ref: "User",
-    },
-  },
-  {
-    timestamps: true,
-  }
-);
-
-const productSchema = new mongoose.Schema(
+const productSchema = mongoose.Schema(
   {
     sku: {
       type: String,
@@ -100,8 +84,20 @@ const productSchema = new mongoose.Schema(
   }
 );
 
+const historySchema = new mongoose.Schema(
+  {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
+    },
+    tag: [String],
+    products: [productSchema],
+  },
+  {
+    timestamps: true,
+  }
+);
 
-
-const Product = mongoose.model("Product", productSchema);
-
-module.exports = Product;
+const History = mongoose.model("History", historySchema);
+module.exports = History;

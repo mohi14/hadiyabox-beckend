@@ -5,6 +5,7 @@ const {
   addBlog,
   getAllBlogs,
   deleteBlog,
+  getSingleBlog,
 } = require("../controller/blogController");
 
 // add blog
@@ -15,5 +16,8 @@ router.post("/remove/:id", deleteBlog);
 
 // get all blog
 router.get("/", getAllBlogs);
+
+// get a blog
+router.get("/blog/:id", getSingleBlog);
 
 module.exports = router;
