@@ -63,8 +63,8 @@ const productSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    tag: [String],
-    reviews: [reviewSchema],
+    // tag: [String],
+    // reviews: [reviewSchema],
 
     flashSale: {
       type: Boolean,

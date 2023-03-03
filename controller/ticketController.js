@@ -85,6 +85,8 @@ const updateTicketStatus = async (req, res) => {
         message: "Wallet Update successfully",
         status: 200,
       });
+
+      
     } else {
       res.status(400).send({
         message: "This Ticket is already used.",
