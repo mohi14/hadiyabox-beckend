@@ -3,6 +3,9 @@ const express = require("express");
 const cors = require("cors");
 const expressFileUploader = require("express-fileupload");
 const helmet = require("helmet");
+const passport = require("passport");
+const passportStrategy = require("../config/passport");
+const authRoute = require("../routes/addressRoutes");
 
 const connectDB = require("../config/db");
 const productRoutes = require("../routes/productRoutes");
@@ -19,6 +22,7 @@ const { isAuth, isAdmin } = require("../config/auth");
 const blogRoutes = require("../routes/blogRoutes");
 const ticketRoutes = require("../routes/ticketRoutes");
 const historyRoutes = require("../routes/historyRoutes");
+const cookieSession = require("cookie-session");
 
 connectDB();
 const app = express();
@@ -31,6 +35,17 @@ app.set("trust proxy", 1);
 app.use(express.json({ limit: "4mb" }), expressFileUploader());
 app.use(helmet());
 app.use(cors());
+
+app.use(
+  cookieSession({
+    name: "session",
+    keys: ["cyberwolve"],
+    maxAge: 24 * 60 * 60 * 100,
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 //root route
 app.get("/", (req, res) => {
@@ -57,6 +72,8 @@ app.use("/api/blogs/", blogRoutes);
 app.use("/api/ticket/", ticketRoutes);
 
 app.use("/api/history/", historyRoutes);
+
+app.use("/auth/google", authRoute);
 
 // Use express's default error handling middleware
 app.use((err, req, res, next) => {
