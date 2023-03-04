@@ -29,7 +29,7 @@ router.delete("/:id", deleteOrder);
 router.post("/add/:id", addOrderByUser);
 
 // get wallet
-router.get("/wallet", getAllWallet);
+router.get("/wallet/all", getAllWallet);
 
 // TODO: add cart
 

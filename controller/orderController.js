@@ -3,6 +3,7 @@ const Order = require("../models/Order");
 const { findOne } = require("../models/User");
 const User = require("../models/User");
 const Wallet = require("../models/Wallet");
+const Admin = require("../models/Admin");
 
 const getAllOrders = async (req, res) => {
   try {
@@ -77,6 +78,8 @@ const deleteOrder = (req, res) => {
 };
 
 const getAllWallet = async (req, res) => {
+  const wallets = await Wallet.find({}).sort({ _id: -1 });
+  // console.log("wallet");
   try {
     const wallet = await Wallet.find({}).sort({ _id: -1 });
     res.send(wallet);
@@ -88,9 +91,11 @@ const getAllWallet = async (req, res) => {
 };
 
 const addOrderByUser = async (req, res) => {
-  const orderAmount = parseInt(req.body.amount);
+  const orderAmount = parseInt(req.body.price);
 
-  const user = await User.findOne({ _id: req.params.id });
+  const user = await Admin.findOne({ _id: req.params.id });
+
+  // console.log(req.body);
 
   try {
     if (user.wallet >= orderAmount) {
