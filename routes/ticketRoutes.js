@@ -14,7 +14,7 @@ const {
 router.post("/add/:id", addTicket);
 
 // delete ticket
-router.post("/remove/:id", isAdmin, deleteTicket);
+router.delete("/remove/:id", deleteTicket);
 
 // get ticket
 router.get("/", getTicket);

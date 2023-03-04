@@ -92,21 +92,29 @@ const getAllWallet = async (req, res) => {
 
 const addOrderByUser = async (req, res) => {
   const orderAmount = parseInt(req.body.price);
-
+  const newhistory = new History({ products: [req.body] });
+  const newWallet = new Wallet({ products: [req.body] });
   const user = await Admin.findOne({ _id: req.params.id });
 
-  // console.log(req.body);
+  console.log(newhistory);
+
+  // wallet create hobe , user amount kombe, history add hbe
 
   try {
     if (user.wallet >= orderAmount) {
-      await User.updateOne(
+      await Admin.updateOne(
         { _id: req.params.id },
         {
           $inc: { wallet: -orderAmount },
         }
       );
-      await History.insertOne(req.body);
-      await Wallet.insertOne(req.body);
+      await newhistory.save();
+      await newWallet.save();
+
+      // await newWallet.insertOne(req.body);
+      // await newhistory.save();
+      // await newWallet.save();
+
       res.status(200).send({
         message: "Order Added Successfully",
         status: 200,

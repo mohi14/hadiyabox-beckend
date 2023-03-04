@@ -5,26 +5,32 @@ const productSchema = mongoose.Schema(
     sku: {
       type: String,
       required: false,
+      default: null,
     },
     title: {
       type: String,
-      required: true,
+      required: false,
+      default: null,
     },
     slug: {
       type: String,
-      required: true,
+      required: false,
+      default: null,
     },
     unit: {
       type: String,
-      required: true,
+      required: false,
+      default: null,
     },
     parent: {
       type: String,
-      required: true,
+      required: false,
+      default: null,
     },
     children: {
       type: String,
       required: false,
+      default: null,
     },
     image: {
       type: String,
@@ -35,33 +41,38 @@ const productSchema = mongoose.Schema(
     store: {
       type: String,
       required: false,
+      default: null,
     },
     originalPrice: {
       type: Number,
-      required: true,
+      required: false,
+      default: null,
     },
     price: {
       type: Number,
-      required: true,
+      required: false,
       default: 0,
     },
     discount: {
       type: Number,
-      required: true,
+      required: false,
       default: 0,
     },
     quantity: {
       type: Number,
-      required: true,
+      required: false,
+      default: 0,
     },
 
     description: {
       type: String,
-      required: true,
+      required: false,
+      default: null,
     },
     type: {
       type: String,
-      required: true,
+      required: false,
+      default: null,
     },
     // tag: [String],
     // reviews: [reviewSchema],
@@ -88,7 +99,7 @@ const historySchema = new mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      required: true,
+      required: false,
       ref: "User",
     },
     tag: [String],

@@ -29,7 +29,7 @@ const addTicket = async (req, res) => {
 
 const deleteTicket = async (req, res) => {
   //   const { wallet } = req.body;
-  Ticket.deleteOne({ _id: req.params.id }, (error) => {
+  await Ticket.deleteOne({ _id: req.params.id }, (error) => {
     if (error) {
       res.status(500).send({
         message: error.message,
@@ -68,7 +68,7 @@ const updateTicketStatus = async (req, res) => {
         }
       );
       const ticketAmount = await Ticket.findById(req.params.id);
-      await User.updateOne(
+      await Admin.updateOne(
         { _id: ticketAmount.user },
         {
           $inc: { wallet: ticketAmount.amount },
@@ -85,8 +85,6 @@ const updateTicketStatus = async (req, res) => {
         message: "Wallet Update successfully",
         status: 200,
       });
-
-      
     } else {
       res.status(400).send({
         message: "This Ticket is already used.",
