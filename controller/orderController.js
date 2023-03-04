@@ -1,6 +1,8 @@
+const History = require("../models/History");
 const Order = require("../models/Order");
 const { findOne } = require("../models/User");
 const User = require("../models/User");
+const Wallet = require("../models/Wallet");
 
 const getAllOrders = async (req, res) => {
   try {
@@ -74,6 +76,17 @@ const deleteOrder = (req, res) => {
   });
 };
 
+const getAllWallet = async (req, res) => {
+  try {
+    const wallet = await Wallet.find({}).sort({ _id: -1 });
+    res.send(wallet);
+  } catch (err) {
+    res.status(500).send({
+      message: err.message,
+    });
+  }
+};
+
 const addOrderByUser = async (req, res) => {
   const orderAmount = parseInt(req.body.amount);
 
@@ -87,6 +100,8 @@ const addOrderByUser = async (req, res) => {
           $inc: { wallet: -orderAmount },
         }
       );
+      await History.insertOne(req.body);
+      await Wallet.insertOne(req.body);
       res.status(200).send({
         message: "Order Added Successfully",
         status: 200,
@@ -112,4 +127,5 @@ module.exports = {
   updateOrder,
   deleteOrder,
   addOrderByUser,
+  getAllWallet,
 };

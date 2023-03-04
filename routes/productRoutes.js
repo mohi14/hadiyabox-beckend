@@ -30,7 +30,8 @@ router.post("/all", addAllProducts);
 router.post("/payment", Stripehandler);
 
 //get a product
-router.post("/:id", getProductById);
+// router.post("/:id", getProductById);
+router.get("/:id", getProductById);
 
 //get showing products only
 router.get("/show", getShowingProducts);

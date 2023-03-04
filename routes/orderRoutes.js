@@ -7,6 +7,7 @@ const {
   updateOrder,
   deleteOrder,
   addOrderByUser,
+  getAllWallet,
 } = require("../controller/orderController");
 
 //get all orders
@@ -26,6 +27,9 @@ router.delete("/:id", deleteOrder);
 
 // add a order
 router.post("/add/:id", addOrderByUser);
+
+// get wallet
+router.get("/wallet", getAllWallet);
 
 // TODO: add cart
 
