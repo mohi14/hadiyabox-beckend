@@ -17,7 +17,7 @@ const couponSchema = new mongoose.Schema(
     },
     endTime: {
       type: Date,
-      required: true,
+      required: false,
     },
     discountPercentage: {
       type: Number,
