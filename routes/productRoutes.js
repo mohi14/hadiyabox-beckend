@@ -34,10 +34,10 @@ router.post("/payment", Stripehandler);
 router.get("/:id", getProductById);
 
 //get showing products only
-router.get("/show", getShowingProducts);
+router.get("/show/all", getShowingProducts);
 
 //get discounted products only
-router.get("/discount", getDiscountedProducts);
+router.get("/discount/all", getDiscountedProducts);
 
 //get all products
 router.get("/", getAllProducts);

@@ -1,13 +1,13 @@
-const Coupon = require('../models/Coupon');
-const dayjs = require('dayjs');
-const utc = require('dayjs/plugin/utc');
+const Coupon = require("../models/Coupon");
+const dayjs = require("dayjs");
+const utc = require("dayjs/plugin/utc");
 dayjs.extend(utc);
 
 const addCoupon = async (req, res) => {
   try {
     const newCoupon = new Coupon(req.body);
     await newCoupon.save();
-    res.send({ message: 'Coupon Added Successfully!' });
+    res.send({ message: "Coupon Added Successfully!" });
   } catch (err) {
     res.status(500).send({ message: err.message });
   }
@@ -17,7 +17,7 @@ const addAllCoupon = async (req, res) => {
   try {
     await Coupon.insertMany(req.body);
     res.status(200).send({
-      message: 'Coupon Added successfully!',
+      message: "Coupon Added successfully!",
     });
   } catch (err) {
     res.status(500).send({
@@ -60,10 +60,10 @@ const updateCoupon = async (req, res) => {
       coupon.productType = req.body.productType;
       coupon.logo = req.body.logo;
       await coupon.save();
-      res.send({ message: 'Coupon Updated Successfully!' });
+      res.send({ message: "Coupon Updated Successfully!" });
     }
   } catch (err) {
-    res.status(404).send({ message: 'Coupon not found!' });
+    res.status(404).send({ message: "Coupon not found!" });
   }
 };
 
@@ -75,10 +75,23 @@ const deleteCoupon = (req, res) => {
       });
     } else {
       res.status(200).send({
-        message: 'Coupon Deleted Successfully!',
+        message: "Coupon Deleted Successfully!",
       });
     }
   });
+};
+
+const deleteMultipleCoupon = async (req, res) => {
+  const idsToDelete = req.body.id;
+
+  try {
+    const result = await Coupon.deleteMany({ _id: { $in: idsToDelete } });
+    res.send(result);
+  } catch (error) {
+    res.status(500).send({
+      message: error.message,
+    });
+  }
 };
 
 module.exports = {
@@ -88,4 +101,5 @@ module.exports = {
   getCouponById,
   updateCoupon,
   deleteCoupon,
+  deleteMultipleCoupon,
 };

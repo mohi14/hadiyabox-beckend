@@ -134,7 +134,7 @@ const StripehandlerNew = async (req, res) => {
 
 const getShowingProducts = async (req, res) => {
   try {
-    const products = await Product.find({ status: "Show" }).sort({ _id: -1 });
+    const products = await Product.find({}).sort({ _id: -1 });
     res.send(products);
   } catch (err) {
     res.status(500).send({
@@ -148,6 +148,8 @@ const getDiscountedProducts = async (req, res) => {
     const products = await Product.find({ discount: { $gt: 5 } }).sort({
       _id: -1,
     });
+
+    console.log("prod", products);
     res.send(products);
   } catch (err) {
     res.status(500).send({

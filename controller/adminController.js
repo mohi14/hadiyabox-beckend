@@ -207,7 +207,7 @@ const deleteStaff = (req, res) => {
       });
     } else {
       res.status(200).send({
-        message: "Admin Deleted Successfully!",
+        message: "User Deleted Successfully!",
       });
     }
   });
