@@ -160,7 +160,7 @@ const getAllStaff = async (req, res) => {
 
 const getStaffById = async (req, res) => {
   try {
-    const admin = await Admin.findById(req.params.id);
+    const admin = await Admin.findById({_id: req.params.id});
     res.send(admin);
   } catch (err) {
     res.status(500).send({

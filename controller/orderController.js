@@ -92,7 +92,12 @@ const getAllWallet = async (req, res) => {
 
 const addOrderByUser = async (req, res) => {
   const orderAmount = parseInt(req.body.price);
-  const newhistory = new History({ products: [req.body] });
+  const newhistory = new History({
+    products: [req.body],
+    user: req.params.id,
+    // userId: req.params.id,
+  });
+  console.log(req.params.id, "user");
   const newWallet = new Wallet({ products: [req.body] });
   const user = await Admin.findOne({ _id: req.params.id });
 

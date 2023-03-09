@@ -7,6 +7,7 @@ const {
   deleteTicket,
   getTicket,
   updateTicketStatus,
+  withdrawTicketStatus,
 } = require("../controller/ticketController");
 
 // add ticket
@@ -21,5 +22,8 @@ router.get("/", getTicket);
 
 //update ticket status
 router.put("/status/:id", isAdmin, updateTicketStatus);
+
+//withdraw ticket status
+router.put("/status/withdraw/:id", isAdmin, withdrawTicketStatus);
 
 module.exports = router;

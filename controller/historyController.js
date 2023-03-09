@@ -8,4 +8,28 @@ const getAllHistory = async (req, res) => {
   res.send(history);
 };
 
-module.exports = { getAllHistory };
+const getUserHistory = async (req, res) => {
+  try {
+    const result = await History.find({ user: req.params.id });
+    // console.log(result, "resu");
+    res.send(result);
+  } catch (err) {
+    res.status(500).send({
+      message: err.message,
+      status: 500,
+    });
+  }
+};
+
+const deleteAllHistory = async (req, res) => {
+  try {
+    const result = await History.deleteMany({});
+    res.send(result);
+  } catch (err) {
+    res.status(500).send({
+      message: err.message,
+    });
+  }
+};
+
+module.exports = { getAllHistory, getUserHistory, deleteAllHistory };

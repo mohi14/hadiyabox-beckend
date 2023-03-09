@@ -95,10 +95,60 @@ const updateTicketStatus = async (req, res) => {
     res.status(404).send(err.message);
   }
 };
+const withdrawTicketStatus = async (req, res) => {
+   
+  // user id,  -> user balanche check korben
+  // body amount 200
+  // check korben balane >= 200
+  // next
+  // status false
+
+  // admin : with req => stause true =? 200 true user - 200
+
+  try {
+    const ticket = await Ticket.findOne({ _id: req.params.id });
+    if (ticket.status === false) {
+      await Ticket.updateOne(
+        { _id: req.params.id },
+        {
+          $set: {
+            status: true,
+          },
+        }
+      );
+      const ticketAmount = await Ticket.findById(req.params.id);
+      await Admin.updateOne(
+        { _id: ticketAmount.user },
+        {
+          $inc: { wallet: ticketAmount.amount },
+        }
+      );
+
+      await Admin.updateOne(
+        { role: "admin" },
+        {
+          $inc: { wallet: ticketAmount.amount },
+        }
+      );
+      res.status(200).send({
+        message: "Wallet Update successfully",
+        status: 200,
+      });
+    } else {
+      res.status(400).send({
+        message: "This Ticket is already used.",
+        status: 400,
+      });
+    }
+  } catch (err) {
+    res.status(404).send(err.message);
+  }
+};
 
 module.exports = {
   addTicket,
   deleteTicket,
   getTicket,
   updateTicketStatus,
+  withdrawTicketStatus,
 };

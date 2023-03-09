@@ -98,9 +98,8 @@ const productSchema = mongoose.Schema(
 const historySchema = new mongoose.Schema(
   {
     user: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: String,
       required: false,
-      ref: "User",
     },
     tag: [String],
     products: [productSchema],
