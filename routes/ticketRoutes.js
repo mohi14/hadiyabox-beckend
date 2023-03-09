@@ -8,6 +8,8 @@ const {
   getTicket,
   updateTicketStatus,
   withdrawTicketStatus,
+  getTicketByUser,
+  rejectTicket,
 } = require("../controller/ticketController");
 
 // add ticket
@@ -20,10 +22,16 @@ router.delete("/remove/:id", deleteTicket);
 // get ticket
 router.get("/", getTicket);
 
+// get ticket based on userId
+router.get("/:id", getTicketByUser);
+
 //update ticket status
 router.put("/status/:id", isAdmin, updateTicketStatus);
 
 //withdraw ticket status
 router.put("/status/withdraw/:id", isAdmin, withdrawTicketStatus);
+
+// reject ticket
+router.put("/status/rejected/:id", rejectTicket);
 
 module.exports = router;

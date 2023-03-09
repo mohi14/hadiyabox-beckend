@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const ticketSchema = mongoose.Schema(
+const withdrawSchema = mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
@@ -13,11 +13,6 @@ const ticketSchema = mongoose.Schema(
     },
     amount: {
       type: Number,
-      default: 0,
-      required: true,
-    },
-    image: {
-      type: String,
       required: true,
     },
     status: {
@@ -36,6 +31,5 @@ const ticketSchema = mongoose.Schema(
   }
 );
 
-const Ticket = mongoose.model("Ticket", ticketSchema);
-
-module.exports = Ticket;
+const WithDraw = mongoose.model("WithDraw", withdrawSchema);
+module.exports = WithDraw;

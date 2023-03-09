@@ -9,10 +9,10 @@ const categorySchema = new mongoose.Schema({
     type: String,
     required: false,
   },
-  product_name: {
-    type: String,
-    required: true,
-  },
+  // product_name: {
+  //   type: String,
+  //   required: true,
+  // },
   price: {
     type: String,
     required: true,

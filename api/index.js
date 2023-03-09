@@ -24,6 +24,8 @@ const ticketRoutes = require("../routes/ticketRoutes");
 const historyRoutes = require("../routes/historyRoutes");
 const cookieSession = require("cookie-session");
 
+const withDrawRoutes = require("../routes/withDrawRoutes");
+
 connectDB();
 const app = express();
 
@@ -74,6 +76,8 @@ app.use("/api/ticket/", ticketRoutes);
 app.use("/api/history/", historyRoutes);
 
 // app.use("/api/wallet/",);
+
+app.use("/api/withdraw/", withDrawRoutes);
 
 app.use("/auth/google", authRoute);
 

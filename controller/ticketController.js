@@ -3,13 +3,12 @@ const User = require("../models/User");
 const Admin = require("../models/Admin");
 
 const addTicket = async (req, res) => {
-  const { name, amount, image, status } = req.body;
+  const { name, amount, image } = req.body;
   try {
     const newTicket = new Ticket({
       name,
       amount,
       image,
-      status,
       user: req.params.id,
     });
     //   console.log(newTicket, "okay");
@@ -95,8 +94,34 @@ const updateTicketStatus = async (req, res) => {
     res.status(404).send(err.message);
   }
 };
+
+const rejectTicket = async (req, res) => {
+  try {
+    const ticket = await Ticket.findOne({ _id: req.params.id });
+    if (ticket.rejected === false) {
+      await Ticket.updateOne(
+        { _id: req.params.id },
+        {
+          $set: {
+            rejected: true,
+          },
+        }
+      );
+      res.status(200).send({
+        message: "Wallet Reject successfully",
+        status: 200,
+      });
+    } else {
+      res.status(400).send({
+        message: "This Ticket is already used.",
+        status: 400,
+      });
+    }
+  } catch (err) {
+    res.status(404).send(err.message);
+  }
+};
 const withdrawTicketStatus = async (req, res) => {
-   
   // user id,  -> user balanche check korben
   // body amount 200
   // check korben balane >= 200
@@ -145,10 +170,24 @@ const withdrawTicketStatus = async (req, res) => {
   }
 };
 
+const getTicketByUser = async (req, res) => {
+  try {
+    const userTicket = await Ticket.find({ user: req.params.id });
+    res.send(userTicket);
+  } catch (err) {
+    res.status(500).send({
+      message: err.message,
+      status: 500,
+    });
+  }
+};
+
 module.exports = {
   addTicket,
   deleteTicket,
   getTicket,
   updateTicketStatus,
   withdrawTicketStatus,
+  getTicketByUser,
+  rejectTicket,
 };

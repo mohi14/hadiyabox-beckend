@@ -24,19 +24,19 @@ const productSchema = new mongoose.Schema(
     },
     title: {
       type: String,
-      required: true,
+      required: false,
     },
     slug: {
       type: String,
-      required: true,
+      required: false,
     },
     unit: {
       type: String,
-      required: true,
+      required: false,
     },
     parent: {
       type: String,
-      required: true,
+      required: false,
     },
     children: {
       type: String,
@@ -54,7 +54,7 @@ const productSchema = new mongoose.Schema(
     },
     originalPrice: {
       type: Number,
-      required: true,
+      required: false,
     },
     price: {
       type: Number,
@@ -63,24 +63,24 @@ const productSchema = new mongoose.Schema(
     },
     discount: {
       type: Number,
-      required: true,
+      required: false,
       default: 0,
     },
     quantity: {
       type: Number,
-      required: true,
+      required: false,
     },
 
     description: {
       type: String,
-      required: true,
+      required: false,
     },
     type: {
       type: String,
-      required: true,
+      required: false,
     },
-    tag: [String],
-    reviews: [reviewSchema],
+    // tag: [String],
+    // reviews: [reviewSchema],
 
     flashSale: {
       type: Boolean,
@@ -99,8 +99,6 @@ const productSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
-
-
 
 const Product = mongoose.model("Product", productSchema);
 
