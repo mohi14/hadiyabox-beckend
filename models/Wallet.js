@@ -9,7 +9,7 @@ const productSchema = mongoose.Schema(
     },
     title: {
       type: String,
-      required: true,
+      required: false,
       default: null,
     },
     slug: {
@@ -19,12 +19,12 @@ const productSchema = mongoose.Schema(
     },
     unit: {
       type: String,
-      required: true,
+      required: false,
       default: null,
     },
     parent: {
       type: String,
-      required: true,
+      required: false,
       default: null,
     },
     children: {
@@ -71,7 +71,7 @@ const productSchema = mongoose.Schema(
     },
     type: {
       type: String,
-      required: true,
+      required: false,
       default: null,
     },
     // tag: [String],

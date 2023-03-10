@@ -7,15 +7,15 @@ const Store = require("../models/storeModel");
 // @route POST /api/orders
 // @access Private
 const addStore = async (req, res) => {
-  const { owner, name, image, description, address } = req.body;
+  const { user, name, image, description, address } = req.body;
   console.log(req.body);
   const store = new Store({
     // owner: owner ? owner : req.user._id,
-    owner: "6341029b8e67f93114d8550a",
+    // owner: "6341029b8e67f93114d8550a",
     name,
     image,
     description,
-    address
+    address,
   });
 
   const createdStore = await store.save();
@@ -39,23 +39,45 @@ const getStore = async (req, res) => {
 // @route GET /api/orders/:id
 // @access Private
 const getStoreById = async (req, res) => {
-  const store = await Store.findById(req.params.id);
-  console.log("Params: ", req.params.id);
-  const products = await Product.find({ store: `${req.params.id}` });
-  console.log("products: ", products);
+  const store = await Store.find({ userID: req.params.id });
+  // console.log("Params: ", req.params.id);
+  // const products = await Product.find({ store: `${req.params.id}` });
+  // console.log("products: ", products);
+  console.log(store);
 
   if (store) {
-    res
-      .status(200)
-      .json({ store, dataLength: products.length, data: products });
+    res.send(store);
   } else {
     res.status(404);
-    throw new Error("Order Not Found");
   }
+};
+
+const addStoreBySeller = async (req, res) => {
+  const { user, name, description, address } = req.body;
+  // console.log(req.body);
+  const store = new Store({
+    userID: req.params.id,
+    user,
+    name,
+    description,
+    address,
+  });
+
+  const createdStore = await store.save();
+  res.status(201).json(createdStore);
+};
+
+const deleteSingleStore = async (req, res) => {
+  await Store.deleteOne({ _id: req.params.id });
+  res.send({
+    message: "Store Delete Succefully",
+  });
 };
 
 module.exports = {
   addStore,
   getStore,
   getStoreById,
+  addStoreBySeller,
+  deleteSingleStore,
 };

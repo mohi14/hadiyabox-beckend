@@ -8,10 +8,11 @@ const storeSchema = mongoose.Schema(
     //   required: true,
     // },
 
-    owner: {
+    user: {
       type: String,
       required: true,
     },
+    userID: { type: String, required: false },
 
     name: { type: String, required: false },
     // image: { type: String, required: false },

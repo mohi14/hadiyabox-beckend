@@ -316,6 +316,7 @@ const deleteProduct = (req, res) => {
     } else {
       res.status(200).send({
         message: "Product Deleted Successfully!",
+        status: 200,
       });
     }
   });

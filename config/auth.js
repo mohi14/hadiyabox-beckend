@@ -47,6 +47,8 @@ const isAuth = async (req, res, next) => {
   }
 };
 
+
+
 const isAdmin = async (req, res, next) => {
   const admin = await Admin.findOne({ role: "admin" });
   if (admin) {

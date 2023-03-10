@@ -160,7 +160,7 @@ const getAllStaff = async (req, res) => {
 
 const getStaffById = async (req, res) => {
   try {
-    const admin = await Admin.findById({_id: req.params.id});
+    const admin = await Admin.findById({ _id: req.params.id });
     res.send(admin);
   } catch (err) {
     res.status(500).send({
@@ -198,6 +198,38 @@ const updateStaff = async (req, res) => {
     res.status(404).send(err.message);
   }
 };
+const updateSeller = async (req, res) => {
+  try {
+    const user = await Admin.findById(req.params.id);
+
+    if (user) {
+      // const updatedAdmin = await admin.save();
+      // res.send({
+      //   token,
+      //   _id: updatedAdmin._id,
+      //   name: updatedAdmin.name,
+      //   email: updatedAdmin.email,
+      //   role: updatedAdmin.role,
+      //   image: updatedAdmin.image,
+      //   joiningData: updatedAdmin.joiningData,
+      // });
+      await Admin.updateOne(
+        { _id: req.params.id },
+        {
+          $set: {
+            role: "seller",
+          },
+        }
+      );
+      res.status(200).send({
+        message: "Seller Updated Successfully",
+        status: 200,
+      });
+    }
+  } catch (err) {
+    res.status(404).send(err.message);
+  }
+};
 
 const deleteStaff = (req, res) => {
   Admin.deleteOne({ _id: req.params.id }, (err) => {
@@ -223,4 +255,5 @@ module.exports = {
   getStaffById,
   updateStaff,
   deleteStaff,
+  updateSeller,
 };
