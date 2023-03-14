@@ -170,28 +170,35 @@ const getStaffById = async (req, res) => {
 };
 
 const updateStaff = async (req, res) => {
+  console.log(req.body);
   try {
     const admin = await Admin.findById(req.params.id);
     if (admin) {
-      admin.name = req.body.data.name;
-      admin.email = req.body.data.email;
-      admin.phone = req.body.data.phone;
-      admin.role = req.body.data.role;
-      admin.joiningData = dayjs().utc().format(req.body.data.joiningDate);
-      admin.password = req.body.data.password
-        ? bcrypt.hashSync(req.body.data.password)
-        : admin.password;
-      admin.image = req.body.data.image;
-      const updatedAdmin = await admin.save();
-      const token = signInToken(updatedAdmin);
-      res.send({
-        token,
-        _id: updatedAdmin._id,
-        name: updatedAdmin.name,
-        email: updatedAdmin.email,
-        role: updatedAdmin.role,
-        image: updatedAdmin.image,
-        joiningData: updatedAdmin.joiningData,
+      await Admin.updateOne(
+        { _id: req.params.id },
+        {
+          $set: {
+            name: req.body.name,
+            phone: req.body.phone,
+          },
+        }
+      );
+
+      // admin.email = req.body.data.email;
+
+      // admin.role = req.body.data.role;
+      // admin.joiningData = dayjs().utc().format(req.body.data.joiningDate);
+      // admin.password = req.body.data.password
+      //   ? bcrypt.hashSync(req.body.data.password)
+      //   : admin.password;
+      // admin.image = req.body.data.image;
+
+      // const token = signInToken(updatedAdmin);
+      res.status(200).send({
+        message: "User Updated Successfully",
+        status: 200,
+        // image: updatedAdmin.image,
+        // joiningData: updatedAdmin.joiningData,
       });
     }
   } catch (err) {

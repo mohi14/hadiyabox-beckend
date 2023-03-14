@@ -1,5 +1,6 @@
 const WithDraw = require("../models/Withdraw");
 const Admin = require("../models/Admin");
+const Notificatin = require("../models/Notification");
 
 const addWithDraw = async (req, res) => {
   const { name, amount } = req.body;
@@ -17,7 +18,15 @@ const addWithDraw = async (req, res) => {
         amount,
         user: req.params.id,
       });
+      const newNotification = new Notificatin({
+        title: "Withdraw",
+        amount: amount,
+        userName: name,
+        userId: req.params.id,
+      });
+
       await newWidthRaw.save();
+      await newNotification.save();
       res.status(200).send({
         message: "WithDraw Request Added successfully",
         status: 200,

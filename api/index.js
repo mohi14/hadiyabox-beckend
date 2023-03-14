@@ -25,6 +25,7 @@ const historyRoutes = require("../routes/historyRoutes");
 const cookieSession = require("cookie-session");
 
 const withDrawRoutes = require("../routes/withDrawRoutes");
+const notificationRoutes = require("../routes/notificationRoutes");
 
 connectDB();
 const app = express();
@@ -78,6 +79,8 @@ app.use("/api/history/", historyRoutes);
 // app.use("/api/wallet/",);
 
 app.use("/api/withdraw/", withDrawRoutes);
+
+app.use("/api/notification/", notificationRoutes);
 
 app.use("/auth/google", authRoute);
 

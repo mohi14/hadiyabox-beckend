@@ -83,6 +83,11 @@ const productSchema = mongoose.Schema(
       default: false,
     },
 
+    seller: {
+      type: String,
+      required: false,
+    },
+
     status: {
       type: String,
       default: "Show",

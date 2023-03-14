@@ -54,6 +54,10 @@ const adminSchema = new mongoose.Schema(
       required: false,
       default: 0,
     },
+    phone: {
+      type: Number,
+      required: false,
+    },
   },
   {
     timestamps: true,

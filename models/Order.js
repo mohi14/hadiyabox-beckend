@@ -1,11 +1,11 @@
-const mongoose = require('mongoose');
-const AutoIncrement = require('mongoose-sequence')(mongoose);
+const mongoose = require("mongoose");
+const AutoIncrement = require("mongoose-sequence")(mongoose);
 
 const orderSchema = new mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
+      ref: "User",
       required: true,
     },
     invoice: {
@@ -68,13 +68,14 @@ const orderSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+
     cardInfo: {
       type: Object,
       required: false,
     },
     status: {
       type: String,
-      enum: ['Pending', 'Processing', 'Delivered'],
+      enum: ["Pending", "Processing", "Delivered"],
     },
   },
   {
@@ -85,9 +86,9 @@ const orderSchema = new mongoose.Schema(
 const Order =
   mongoose.models.Order ||
   mongoose.model(
-    'Order',
+    "Order",
     orderSchema.plugin(AutoIncrement, {
-      inc_field: 'invoice',
+      inc_field: "invoice",
       start_seq: 10000,
     })
   );

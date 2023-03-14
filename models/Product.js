@@ -81,6 +81,10 @@ const productSchema = new mongoose.Schema(
     },
     // tag: [String],
     // reviews: [reviewSchema],
+    seller: {
+      type: String,
+      required: false,
+    },
 
     flashSale: {
       type: Boolean,

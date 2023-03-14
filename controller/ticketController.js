@@ -1,6 +1,7 @@
 const Ticket = require("../models/Ticket");
 const User = require("../models/User");
 const Admin = require("../models/Admin");
+const Notificatin = require("../models/Notification");
 
 const addTicket = async (req, res) => {
   const { name, amount, image } = req.body;
@@ -11,8 +12,16 @@ const addTicket = async (req, res) => {
       image,
       user: req.params.id,
     });
+
+    const newNotification = new Notificatin({
+      title: "Ticket",
+      amount: amount,
+      userName: name,
+      userId: req.params.id,
+    });
     //   console.log(newTicket, "okay");
     await newTicket.save();
+    await newNotification.save();
     res.status(200).send({
       message: "Ticket Added successfully",
       status: 200,

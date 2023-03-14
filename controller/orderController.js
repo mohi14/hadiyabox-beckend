@@ -4,6 +4,7 @@ const { findOne } = require("../models/User");
 const User = require("../models/User");
 const Wallet = require("../models/Wallet");
 const Admin = require("../models/Admin");
+const Notificatin = require("../models/Notification");
 
 const getAllOrders = async (req, res) => {
   try {
@@ -97,13 +98,22 @@ const addOrderByUser = async (req, res) => {
     user: req.params.id,
     // userId: req.params.id,
   });
-  console.log(req.params.id, "user");
+
   const newWallet = new Wallet({ products: [req.body] });
   const user = await Admin.findOne({ _id: req.params.id });
 
-  console.log(newhistory);
+  // console.log(newhistory);
 
   // wallet create hobe , user amount kombe, history add hbe
+
+  const newNotification = new Notificatin({
+    title: "Order",
+    amount: orderAmount,
+    userName: user?.name,
+    userId: req.params.id,
+    productName: req.body.title,
+    productId: req.body._id,
+  });
 
   try {
     if (user.wallet >= orderAmount) {
@@ -115,6 +125,7 @@ const addOrderByUser = async (req, res) => {
       );
       await newhistory.save();
       await newWallet.save();
+      await newNotification.save();
 
       // await newWallet.insertOne(req.body);
       // await newhistory.save();
