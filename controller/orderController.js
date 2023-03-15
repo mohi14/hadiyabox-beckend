@@ -137,6 +137,12 @@ const addOrderByUser = async (req, res) => {
           $inc: { wallet: -orderAmount },
         }
       );
+      await Admin.updateOne(
+        { name: req.body.seller },
+        {
+          $inc: { wallet: orderAmount },
+        }
+      );
       await newhistory.save();
       await newWallet.save();
       await newNotification.save();
