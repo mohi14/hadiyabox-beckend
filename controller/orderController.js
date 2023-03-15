@@ -5,6 +5,17 @@ const User = require("../models/User");
 const Wallet = require("../models/Wallet");
 const Admin = require("../models/Admin");
 const Notificatin = require("../models/Notification");
+const nodemailer = require("nodemailer");
+
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: "your_email_address@gmail.com",
+    pass: "your_email_password",
+  },
+});
+
+const email = "mohi.opediatech@gmail.com";
 
 const getAllOrders = async (req, res) => {
   try {
@@ -102,6 +113,9 @@ const addOrderByUser = async (req, res) => {
   const newWallet = new Wallet({ products: [req.body] });
   const user = await Admin.findOne({ _id: req.params.id });
 
+  const admin = await Admin.findOne({ role: "admin" });
+  const seller = await Admin.findOne({ name: req.body.seller });
+
   // console.log(newhistory);
 
   // wallet create hobe , user amount kombe, history add hbe
@@ -130,6 +144,36 @@ const addOrderByUser = async (req, res) => {
       // await newWallet.insertOne(req.body);
       // await newhistory.save();
       // await newWallet.save();
+
+      // email send start
+      const transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: "mohisilva1@gmail.com",
+          pass: "peqprjkgjiikugvk",
+        },
+      });
+
+      const mailOptions = {
+        from: "mohisilva1@gmail.com",
+        to: [admin.email, seller.email],
+        subject: "Order Purchased",
+        html: `<h2>Yahooooo!</h2>
+              <p>${user.name} purchased ${req.body.title} from ${req.body.store}</p>
+            `,
+      };
+
+      transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+          console.error(error);
+          res.send("Error sending email");
+        } else {
+          console.log("Email sent: " + info.response);
+          res.send("Email sent successfully");
+        }
+      });
+
+      // email send END
 
       res.status(200).send({
         message: "Order Added Successfully",
